@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual env
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local artifacts
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+translation_history.sqlite3
+translation_history.sqlite3-journal
+
+# Exported documents
+*.docx
+
+# Hugging Face cache (only if you put cache inside repo)
+.cache/
+huggingface/
+hf_cache/
