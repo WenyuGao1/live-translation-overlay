@@ -1,0 +1,170 @@
+# Live Translation Overlay (EN -> Target Language)
+
+A two-window desktop overlay for real-time English speech recognition + translation, with persistent session history and one-click Word export (auto-split).
+
+**Important:** First run downloads **Whisper + NLLB** models from Hugging Face. Internet + disk cache required.
+
+---
+
+## Features
+- Real-time microphone capture (sounddevice)
+- English ASR via faster-whisper (WhisperModel)
+- Audio overlap + text de-duplication to reduce boundary drops/repeats
+- Sentence splitting + idle finalize
+- Translation via NLLB-200 distilled 1.3B (Transformers)
+- Target language selectable at runtime (**dropdown shows English names**, not NLLB codes)
+- Two-window UI: semi-transparent background + crisp chroma-key overlay subtitles
+- Persistent history stored in SQLite (async, best-effort; may drop records under overload)
+- Export full history of the **CURRENT SESSION** to Word (.docx), auto-splitting into multiple files (by record count)
+
+---
+
+## Screenshot (Recommended)
+Add a screenshot so users instantly understand the UI.
+
+Path suggested:
+- `assets/screenshot.png`
+
+Then it will render on GitHub:
+![screenshot](assets/screenshot.png)
+
+---
+
+## Requirements
+- Python 3.9+ (recommended 3.10/3.11)
+- Windows recommended
+  - Chroma-key transparency via Tk `-transparentcolor` is generally Windows-only; on macOS/Linux the key color may be visible.
+- Microphone input device
+- Optional: NVIDIA GPU (CUDA) for faster inference
+
+---
+
+## Quick Start (Windows)
+~~~bash
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -U pip
+pip install -r requirements.txt
+
+python main.py
+~~~
+
+## Quick Start (macOS/Linux)
+~~~bash
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -U pip
+pip install -r requirements.txt
+
+python main.py
+~~~
+
+---
+
+## How to Use
+- The app creates **two windows**:
+  1) Background window (semi-transparent, movable/resizable)
+  2) Overlay window (borderless subtitles)
+- Right-click (overlay or background) menu:
+  - Choose EN Color / Choose OUT Color / Quit
+- Click **⚙** on the overlay to open Settings:
+  - Show/Hide English subtitles
+  - Target language dropdown (English names)
+  - Audio input device selection
+  - Export **CURRENT SESSION** history to Word (.docx)
+
+---
+
+## Export to Word (.docx)
+- In Settings, tick: **Export THIS SESSION history**
+- Choose a save path
+- Export reads from the SQLite DB and writes one or more `.docx` files
+- Auto-split every `DOCX_MAX_RECORDS_PER_FILE` records (default 2000)
+
+Note: splitting is by **record count**, not by “lines” or character count.
+
+---
+
+## Optional Configuration (CLI)
+Override Hugging Face cache dir:
+~~~bash
+python main.py --hf-home D:\hf_cache
+~~~
+
+Override history DB path:
+~~~bash
+python main.py --db-path D:\overlay\translation_history.sqlite3
+~~~
+
+Disable hf_transfer (if downloads fail):
+~~~bash
+python main.py --disable-hf-transfer
+~~~
+
+---
+
+## Environment Variables (Alternative)
+~~~text
+HF_HOME=/path/to/cache
+HISTORY_DB_PATH=/path/to/translation_history.sqlite3
+WHISPER_CT2_REPO=...   (optional: force a specific faster-whisper CT2 repo)
+~~~
+
+---
+
+## Privacy
+- Audio is processed locally for ASR.
+- Translation runs locally with NLLB.
+- Internet is only required for first-run model download (unless already cached).
+
+---
+
+## Troubleshooting
+### Hugging Face download timeout / failures
+Try disabling hf_transfer:
+~~~bash
+python main.py --disable-hf-transfer
+~~~
+Also ensure enough disk space for the cache.
+
+### Microphone / sounddevice issues (Windows)
+- Confirm your microphone works in Windows Settings
+- Reinstall:
+~~~bash
+pip install sounddevice
+~~~
+If device selection is wrong, choose the correct input device in Settings.
+
+### Overlay transparency not working (non-Windows)
+Expected: Tk `-transparentcolor` is generally Windows-only; on macOS/Linux the key color may remain visible.
+
+---
+
+## What to Upload to GitHub
+Upload:
+- `main.py`
+- `README.md`
+- `requirements.txt`
+- `LICENSE`
+- `.gitignore`
+- `assets/screenshot.png` (recommended)
+
+Do NOT upload:
+- `.venv/`
+- `__pycache__/`
+- Hugging Face cache / model files
+- `translation_history.sqlite3`
+- exported `.docx`
+
+---
+
+## License
+MIT (see `LICENSE`).
+
+---
+
+## Acknowledgements
+- faster-whisper (Whisper ASR)
+- Meta NLLB-200 (facebook/nllb-200-distilled-1.3B) via Hugging Face Transformers
