@@ -19,14 +19,11 @@ A two-window desktop overlay for real-time English speech recognition + translat
 
 ---
 
-## Screenshot (Recommended)
-Add a screenshot so users instantly understand the UI.
+## Screenshot 
 
-Path suggested:
-- `assets/screenshot.png`
+<img width="2106" height="1357" alt="screenshot" src="https://github.com/user-attachments/assets/3e06e9ec-fbb4-4a17-a126-f64b6ebaf59f" />
 
-Then it will render on GitHub:
-![screenshot](assets/screenshot.png)
+
 
 ---
 
