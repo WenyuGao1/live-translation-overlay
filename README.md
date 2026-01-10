@@ -139,29 +139,6 @@ Expected: Tk `-transparentcolor` is generally Windows-only; on macOS/Linux the k
 
 ---
 
-## What to Upload to GitHub
-Upload:
-- `main.py`
-- `README.md`
-- `requirements.txt`
-- `LICENSE`
-- `.gitignore`
-- `assets/screenshot.png` (recommended)
-
-Do NOT upload:
-- `.venv/`
-- `__pycache__/`
-- Hugging Face cache / model files
-- `translation_history.sqlite3`
-- exported `.docx`
-
----
-
-## License
-MIT (see `LICENSE`).
-
----
-
 ## Acknowledgements
 - faster-whisper (Whisper ASR)
 - Meta NLLB-200 (facebook/nllb-200-distilled-1.3B) via Hugging Face Transformers
