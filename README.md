@@ -23,8 +23,9 @@ A two-window desktop overlay for real-time English speech recognition + translat
 
 <img width="2106" height="1357" alt="screenshot" src="https://github.com/user-attachments/assets/3e06e9ec-fbb4-4a17-a126-f64b6ebaf59f" />
 
-## Pipline
+## Pipeline
 
+```mermaid
 flowchart TD
   A[App Start<br/>(Local / Offline)] --> B[Load NLLB-200 + Language Map<br/>(startup)]
   B --> C[(SQLite History<br/>translation_history.sqlite3)]
@@ -46,7 +47,6 @@ flowchart TD
   RT[Runtime target language switching] -.-> G
   TW[Two-window design<br/>(controller + overlay)] -.-> H
   NB[Non-blocking UI<br/>(async DB writes)] -.-> M
-
 
 ---
 
